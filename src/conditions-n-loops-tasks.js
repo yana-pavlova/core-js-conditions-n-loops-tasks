@@ -187,7 +187,6 @@ function convertNumberToString(numberStr) {
 
   return result;
 }
-
 /**
  * Determines whether a string is a palindrome.
  * In this task, the use of methods of the String and Array classes is not allowed.
@@ -417,18 +416,32 @@ function rotateMatrix(matrix) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 function sortByAsc(arr) {
-  const n = arr.length;
-  const arrRes = arr;
-
-  for (let i = 0; i < n - 1; i += 1) {
-    for (let j = 0; j < n - 1 - i; j += 1) {
-      if (arrRes[j] > arrRes[j + 1]) {
-        const temp = arrRes[j];
-        arrRes[j] = arrRes[j + 1];
-        arrRes[j + 1] = temp;
+  function partition(arrC, low, high) {
+    const pivot = arr[high];
+    const arrCC = arrC;
+    let i = low - 1;
+    for (let j = low; j < high; j += 1) {
+      if (arr[j] <= pivot) {
+        i += 1;
+        const temp = arr[i];
+        arrCC[i] = arr[j];
+        arrCC[j] = temp;
       }
     }
+    const temp = arr[i + 1];
+    arrCC[i + 1] = arr[high];
+    arrCC[high] = temp;
+    return i + 1;
   }
+  function quickSort(arrC, low, high) {
+    if (low < high) {
+      const pi = partition(arr, low, high);
+      quickSort(arr, low, pi - 1);
+      quickSort(arr, pi + 1, high);
+    }
+  }
+
+  quickSort(arr, 0, arr.length - 1);
 
   return arr;
 }
